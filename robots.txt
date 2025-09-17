@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://squircley.app/sitemap.xml
+
+# Crawl-delay for polite crawling
+Crawl-delay: 1
