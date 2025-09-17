@@ -102,6 +102,20 @@
       }
     </script>
   </head>
+  <!-- Google tag (gtag.js) -->
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=G-KXPV61Y1PB"
+  ></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-KXPV61Y1PB");
+  </script>
   <body>
     <header role="banner">
       <h1 class="logo">
@@ -150,8 +164,8 @@
       </h1>
     </header>
 
-    <main id="stage" role="main">
-      <section id="preview" aria-label="Shape preview" role="region">
+    <main class="l-stage" role="main">
+      <section class="l-preview" aria-label="Shape preview" role="region">
         <h2 class="sr-only">Live Squircle Preview</h2>
         <svg
           id="preview-svg"
@@ -173,7 +187,7 @@
       </section>
 
       <aside
-        id="controls"
+        class="l-controls"
         aria-label="Shape customization controls"
         role="complementary"
       >
@@ -254,7 +268,7 @@
           </div>
         </div>
 
-        <div class="control-group dotted">
+        <div class="control-group is-dotted">
           <p class="control-label">Export</p>
           <div class="controls-actions">
             <button
@@ -300,7 +314,7 @@
       </aside>
     </main>
 
-    <footer role="contentinfo">
+    <footer class="l-footer" role="contentinfo">
       <div class="footer-content">
         <p>&copy; 2025 Squircley - Free SVG Squircle Generator</p>
         <p class="footer-description sr-only">
@@ -312,6 +326,6 @@
     </footer>
 
     <script src="coloris.min.js"></script>
-    <script src="app.js"></script>
+    <script type="module" src="js/app.js"></script>
   </body>
 </html>
