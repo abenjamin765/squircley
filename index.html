@@ -103,7 +103,7 @@
     </script>
   </head>
   <!-- Google tag (gtag.js) -->
-  <script
+  <!-- <script
     async
     src="https://www.googletagmanager.com/gtag/js?id=G-KXPV61Y1PB"
   ></script>
@@ -115,7 +115,11 @@
     gtag("js", new Date());
 
     gtag("config", "G-KXPV61Y1PB");
-  </script>
+  </script> -->
+
+  <!-- 100% privacy-first analytics -->
+  <script async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
+
   <body>
     <header role="banner">
       <h1 class="logo">
@@ -322,8 +326,22 @@
           elements, logos, and modern graphics. Export as SVG for scalable,
           crisp results.
         </p>
+        <nav class="footer-nav">
+          <a href="privacy.html">Privacy Policy</a>
+        </nav>
       </div>
     </footer>
+
+    <aside class="privacy">
+      <p>
+        This site only uses cookies to understand how people use it. Do you want
+        to allow that?
+      </p>
+      <div class="actions">
+        <button class="button small">Allow</button>
+        <button class="button small">Deny</button>
+      </div>
+    </aside>
 
     <script src="coloris.min.js"></script>
     <script type="module" src="js/app.js"></script>
