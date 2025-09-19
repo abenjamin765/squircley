@@ -1,0 +1,52 @@
+@keyframes slide-open {
+  from {
+    width: 512px;
+  }
+
+  to {
+    width: 100%;
+  }
+}
+@keyframes slide-in {
+  from {
+    transform: scale(0.5) translateX(-100%) rotate(45deg);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1) translateX(0) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    transform: translateY(10rem) scale(3);
+  }
+
+  to {
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes slide-left {
+  0% {
+    transform: translateX(10rem);
+    opacity: 0;
+  }
+
+  60% {
+    transform: translateX(-0.5rem);
+    opacity: 1;
+  }
+
+  80% {
+    transform: translateX(0.25rem);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}

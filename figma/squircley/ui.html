@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Squircley</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          sans-serif;
+        background: #ffffff;
+        color: #333;
+        padding: 0;
+        margin: 0;
+        height: 300px;
+      }
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+
+      .subtitle {
+        font-size: 12px;
+        color: #666;
+      }
+
+      .control-group {
+        margin-bottom: 16px;
+      }
+
+      .control-label {
+        display: block;
+        font-size: 12px;
+        font-weight: 500;
+        margin-bottom: 6px;
+        color: #333;
+      }
+
+      .create-button {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        background: #0b99ff;
+        color: white;
+        border: none;
+        height: 24px;
+        width: 24px;
+        border-radius: 4px;
+        font-size: 20px;
+        font-weight: 200;
+        transition: background-color 0.1s linear;
+      }
+
+      .create-button:hover {
+      }
+
+      .create-button:active {
+        background-color: #0a8ce8;
+      }
+
+      .slider-container {
+        position: absolute;
+        bottom: 30px;
+        left: 30px;
+        right: 30px;
+      }
+
+      .slider {
+        -webkit-appearance: none;
+        width: 100%;
+        appearance: none;
+      }
+
+      .slider:focus {
+        outline: none;
+      }
+
+      .slider::-webkit-slider-runnable-track {
+        width: 100%;
+        height: 1px;
+        background: black;
+        border-radius: 1rem;
+      }
+
+      .slider::-webkit-slider-thumb {
+        border: 1px solid #000000;
+        height: 1.5rem;
+        width: 1.5rem;
+        border-radius: 50%;
+        background: #ffffff;
+        -webkit-appearance: none;
+        margin-top: -12px;
+        cursor: grab;
+      }
+
+      .slider::-webkit-slider-thumb:hover {
+        cursor: grab;
+      }
+
+      .slider::-webkit-slider-thumb:active {
+        cursor: grabbing;
+      }
+
+      .slider:focus::-webkit-slider-runnable-track {
+        background: black;
+      }
+
+      .slider::-moz-range-track {
+        width: 100%;
+        height: 1px;
+        background: black;
+        border-radius: 1rem;
+      }
+
+      .slider::-moz-range-thumb {
+        border: 1px solid #000000;
+        height: 1.5rem;
+        width: 1.5rem;
+        border-radius: 50%;
+        background: #ffffff;
+        cursor: grab;
+      }
+
+      .slider-value {
+        position: absolute;
+        top: -24px;
+        right: 0;
+        font-size: 12px;
+        font-weight: 500;
+        color: #8e2de2;
+        background: rgba(255, 255, 255, 0.9);
+        padding: 2px 6px;
+        border-radius: 3px;
+        border: 1px solid #e0e0e0;
+        display: none;
+      }
+
+      .status-message {
+        font-size: 11px;
+        color: #666;
+        margin-top: 8px;
+        line-height: 1.4;
+      }
+
+      .status-message.error {
+        color: #e74c3c;
+      }
+
+      .status-message.success {
+        color: #27ae60;
+      }
+
+      .preview-hint {
+        font-size: 10px;
+        color: #999;
+        margin-top: 8px;
+        font-style: italic;
+      }
+
+      .footer {
+        margin-top: 16px;
+        padding-top: 12px;
+        border-top: 1px solid #e0e0e0;
+        text-align: center;
+      }
+
+      .footer-text {
+        font-size: 10px;
+        color: #999;
+      }
+
+      .preview-section {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .preview-container {
+        display: flex;
+        padding: 12px;
+        height: 100%;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        background: repeating-conic-gradient(#f4f4f4 0 25%, #fff 0 50%) 50% /
+          20px 20px;
+      }
+
+      .preview-container svg {
+        display: block;
+        margin: 0 auto;
+        transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .preview-container svg.exit-animation {
+        transform: translateX(300px) rotate(360deg);
+        /* opacity: 0; */
+      }
+
+      @keyframes squircle-exit {
+        0% {
+          transform: translateX(0);
+          opacity: 1;
+        }
+        100% {
+          transform: translateX(300px);
+          opacity: 0;
+        }
+      }
+
+      .preview-label {
+        font-size: 11px;
+        font-weight: 500;
+        color: #666;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="preview-section">
+      <div class="preview-container">
+        <svg
+          id="preview-svg"
+          width="200"
+          height="200"
+          viewBox="0 0 289 289"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          role="img"
+          aria-label="Squircle preview"
+        >
+          <path
+            id="preview-path"
+            d=""
+            fill="#EFB435"
+            stroke="#000000"
+            stroke-width="4"
+          />
+        </svg>
+      </div>
+    </div>
+
+    <label class="control-label sr-only" for="curvature">Curvature</label>
+    <div class="slider-container">
+      <input
+        type="range"
+        id="curvature"
+        class="slider"
+        min="0"
+        max="100"
+        value="75"
+        step="1"
+      />
+      <span class="slider-value" id="curvatureValue">75</span>
+    </div>
+    <button class="create-button" id="createSquircle">+</button>
+    <!-- <button class="create-button" id="createSquircle">⚄</button> -->
+
+    <script>
+      // ============================================================================
+      // CONFIGURATION & STATE
+      // ============================================================================
+
+      /** Current curvature value (0-100) */
+      let currentCurvature = 75;
+
+      /** Shape generation constants (matching backend) */
+      const SHAPE_CONSTANTS = {
+        center: 144.5,
+        semiMajorAxis: 100,
+        semiMinorAxis: 100,
+        controlFactor: 0.552,
+        tangentOffset: Math.PI / 16,
+      };
+
+      // ============================================================================
+      // DOM ELEMENTS
+      // ============================================================================
+
+      /** UI Element references */
+      const elements = {
+        createButton: document.getElementById("createSquircle"),
+        curvatureSlider: document.getElementById("curvature"),
+        curvatureValue: document.getElementById("curvatureValue"),
+        previewPath: document.getElementById("preview-path"),
+        previewSvg: document.getElementById("preview-svg"),
+      };
+
+      /**
+       * Calculate superellipse point using parametric equations
+       */
+      function calculateSuperellipsePoint(
+        angle,
+        semiMajorAxis,
+        semiMinorAxis,
+        power
+      ) {
+        const cosT = Math.cos(angle);
+        const sinT = Math.sin(angle);
+
+        // Superellipse parametric equations (same as web app)
+        const cosPower = Math.pow(Math.abs(cosT), 2 / power) * Math.sign(cosT);
+        const sinPower = Math.pow(Math.abs(sinT), 2 / power) * Math.sign(sinT);
+
+        return {
+          x: semiMajorAxis * cosPower,
+          y: semiMinorAxis * sinPower,
+        };
+      }
+
+      /**
+       * Apply rotation transformation to a point
+       */
+      function applyRotation(point, rotation) {
+        if (rotation === 0) return point;
+
+        const rad = (rotation * Math.PI) / 180;
+        const cosR = Math.cos(rad);
+        const sinR = Math.sin(rad);
+
+        return {
+          x: point.x * cosR - point.y * sinR,
+          y: point.x * sinR + point.y * cosR,
+        };
+      }
+
+      /**
+       * Generate superellipse path using cubic Bézier curves
+       */
+      function generateSuperellipsePath(
+        semiMajorAxis,
+        semiMinorAxis,
+        power,
+        rotation = 0
+      ) {
+        const { center, controlFactor, tangentOffset } = SHAPE_CONSTANTS;
+
+        // For now, let's create a simple rectangle to test if the issue is with the superellipse formula
+        // We'll use the key points directly without complex Bézier curves
+        const angles = [0, Math.PI / 2, Math.PI, (3 * Math.PI) / 2];
+        const keyPoints = angles.map((angle) => {
+          let point = calculateSuperellipsePoint(
+            angle,
+            semiMajorAxis,
+            semiMinorAxis,
+            power
+          );
+          point = applyRotation(point, rotation);
+
+          return {
+            x: point.x + center,
+            y: point.y + center,
+          };
+        });
+
+        // Calculate tangent points for smooth curve approximation
+        const tangentPoints = [];
+        for (let i = 0; i < 4; i++) {
+          const baseAngle = (i * Math.PI) / 2;
+          const angle1 = baseAngle - tangentOffset;
+          const angle2 = baseAngle + tangentOffset;
+
+          const calcPoint = (angle) => {
+            const cosT = Math.cos(angle);
+            const sinT = Math.sin(angle);
+            const cosPower =
+              Math.pow(Math.abs(cosT), 2 / power) * Math.sign(cosT);
+            const sinPower =
+              Math.pow(Math.abs(sinT), 2 / power) * Math.sign(sinT);
+
+            let x = semiMajorAxis * cosPower;
+            let y = semiMinorAxis * sinPower;
+
+            if (rotation !== 0) {
+              const rad = (rotation * Math.PI) / 180;
+              const cosR = Math.cos(rad);
+              const sinR = Math.sin(rad);
+              const newX = x * cosR - y * sinR;
+              const newY = x * sinR + y * cosR;
+              x = newX;
+              y = newY;
+            }
+
+            return [x + center, y + center];
+          };
+
+          const before = calcPoint(angle1);
+          const after = calcPoint(angle2);
+          tangentPoints.push({ before, after });
+        }
+
+        // Generate Bézier curves for smooth path
+        const curves = [];
+        for (let i = 0; i < 4; i++) {
+          const start = [keyPoints[i].x, keyPoints[i].y];
+          const end = [keyPoints[(i + 1) % 4].x, keyPoints[(i + 1) % 4].y];
+          const tangent = tangentPoints[i];
+          const nextTangent = tangentPoints[(i + 1) % 4];
+
+          curves.push({
+            start,
+            cp1: [
+              start[0] + (tangent.after[0] - tangent.before[0]) * controlFactor,
+              start[1] + (tangent.after[1] - tangent.before[1]) * controlFactor,
+            ],
+            cp2: [
+              end[0] -
+                (nextTangent.after[0] - nextTangent.before[0]) * controlFactor,
+              end[1] -
+                (nextTangent.after[1] - nextTangent.before[1]) * controlFactor,
+            ],
+            end,
+          });
+        }
+
+        // Generate SVG path using cubic Bézier curves
+        const [firstCurve, ...restCurves] = curves;
+        let pathData = `M ${firstCurve.start[0]} ${firstCurve.start[1]}`;
+
+        for (const curve of curves) {
+          pathData += ` C ${curve.cp1[0]} ${curve.cp1[1]}, ${curve.cp2[0]} ${curve.cp2[1]}, ${curve.end[0]} ${curve.end[1]}`;
+        }
+
+        pathData += " Z";
+        return pathData;
+      }
+
+      /**
+       * Update the preview SVG with current curvature
+       */
+      function updatePreview() {
+        const power = 0.5 + (10 - 0.5) * (currentCurvature / 100);
+        const pathData = generateSuperellipsePath(
+          SHAPE_CONSTANTS.semiMajorAxis,
+          SHAPE_CONSTANTS.semiMinorAxis,
+          power,
+          0
+        );
+        elements.previewPath.setAttribute("d", pathData);
+      }
+
+      /**
+       * Update slider value display and preview
+       */
+      function updateSliderValue() {
+        currentCurvature = parseInt(elements.curvatureSlider.value);
+        elements.curvatureValue.textContent = currentCurvature;
+        updatePreview();
+      }
+
+      // ============================================================================
+      // EVENT HANDLERS
+      // ============================================================================
+
+      /**
+       * Handle create button click with animation
+       */
+      function handleCreateClick() {
+        // Start the exit animation
+        elements.previewSvg.classList.add("exit-animation");
+
+        // Send message to create squircle
+        parent.postMessage(
+          {
+            pluginMessage: {
+              type: "create-squircle",
+              curvature: currentCurvature,
+            },
+          },
+          "*"
+        );
+
+        // Reset the animation and update preview after a brief delay
+        setTimeout(() => {
+          elements.previewSvg.classList.remove("exit-animation");
+          updatePreview(); // Ensure preview is refreshed
+        }, 500); // Match the CSS transition duration
+      }
+
+      /**
+       * Handle slider input changes
+       */
+      function handleSliderInput() {
+        updateSliderValue();
+      }
+
+      /**
+       * Handle drag start for preview SVG
+       */
+      function handleDragStart(e) {
+        // Set drag data
+        e.dataTransfer.setData(
+          "text/plain",
+          JSON.stringify({
+            type: "create-squircle",
+            curvature: currentCurvature,
+            dragged: true,
+          })
+        );
+
+        // Add visual feedback
+        elements.previewSvg.style.opacity = "0.5";
+
+        // Could show status message here if we had one
+      }
+
+      /**
+       * Handle drag end for preview SVG
+       */
+      function handleDragEnd(e) {
+        // Reset visual feedback
+        elements.previewSvg.style.opacity = "1";
+
+        // Send message to create squircle
+        parent.postMessage(
+          {
+            pluginMessage: {
+              type: "create-squircle",
+              curvature: currentCurvature,
+              dragged: true,
+            },
+          },
+          "*"
+        );
+      }
+
+      // ============================================================================
+      // EVENT LISTENERS
+      // ============================================================================
+
+      elements.createButton.addEventListener("click", handleCreateClick);
+      elements.curvatureSlider.addEventListener("input", handleSliderInput);
+      elements.previewSvg.addEventListener("dragstart", handleDragStart);
+      elements.previewSvg.addEventListener("dragend", handleDragEnd);
+
+      // Initialize
+      updateSliderValue();
+      updatePreview();
+    </script>
+  </body>
+</html>

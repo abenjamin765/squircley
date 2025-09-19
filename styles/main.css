@@ -64,6 +64,12 @@ input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
   margin-top: -12px;
 }
+input[type="range"]::-webkit-slider-thumb:hover {
+  cursor: grab;
+}
+input[type="range"]::-webkit-slider-thumb:active {
+  cursor: grabbing;
+}
 
 input[type="range"]:focus::-webkit-slider-runnable-track {
   background: black;
@@ -130,6 +136,11 @@ input[type="range"]:focus::-ms-fill-upper {
   display: flex;
   flex-direction: row;
   overflow: hidden;
+  animation-name: slide-in, slide-open;
+  animation-timing-function: ease-in-out, ease-in-out;
+  animation-duration: 1s, 1s;
+  animation-delay: 1s, 2s;
+  animation-fill-mode: backwards, backwards;
 }
 
 .l-preview {
@@ -163,6 +174,11 @@ input[type="range"]:focus::-ms-fill-upper {
   margin: 2rem;
   display: block;
   text-align: center;
+  animation-name: slide-up;
+  animation-duration: 1s;
+  animation-timing-function: ease-in-out;
+  animation-delay: 1s;
+  animation-fill-mode: backwards;
 }
 
 /* Control group module */
@@ -171,6 +187,27 @@ input[type="range"]:focus::-ms-fill-upper {
   width: 100%;
   grid-template-columns: 120px 1fr;
   align-items: center;
+  animation-name: slide-left;
+  animation-duration: 1s;
+  animation-delay: 3s;
+  animation-fill-mode: backwards;
+}
+
+/* Staggered animation delays for control groups */
+.control-group:nth-child(2) {
+  animation-delay: 3s;
+}
+.control-group:nth-child(3) {
+  animation-delay: 3.2s;
+}
+.control-group:nth-child(4) {
+  animation-delay: 3.4s;
+}
+.control-group:nth-child(5) {
+  animation-delay: 3.6s;
+}
+.control-group:nth-child(6) {
+  animation-delay: 3.8s;
 }
 
 .control-label {
