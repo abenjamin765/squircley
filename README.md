@@ -16,7 +16,7 @@ A modern, web-based SVG squircle generator that creates beautiful rounded square
 
 ## 🚀 Live Demo
 
-Visit [squircley.app](https://squircley.app) to try it out!
+Visit [squircley.lol](https://squircley.lol) to try it out!
 
 ## 🛠️ Technologies Used
 
@@ -189,7 +189,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Contact
 
-- **Website**: [squircley.app](https://squircley.app)
+- **Website**: [squircley.lol](https://squircley.lol)
 - **Issues**: [GitHub Issues](https://github.com/yourusername/squircley/issues)
 - **Discussions**: [GitHub Discussions](https://github.com/yourusername/squircley/discussions)
 
