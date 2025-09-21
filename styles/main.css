@@ -232,6 +232,41 @@ input[type="range"]:focus::-ms-fill-upper {
   right: 0;
   z-index: 1000;
 }
+.top-button {
+  position: fixed;
+  top: 8px;
+  right: 8px;
+  z-index: 2;
+  background-color: #ffffff;
+  color: #000000;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 400;
+  height: 32px;
+  justify-content: center;
+  border: solid 1px #000000;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+.top-button:hover {
+  background-color: #f4f4f4;
+}
+.top-button:active {
+  background-color: #eee;
+}
+.top-button:focus {
+  outline: 2px solid #4a00e0;
+  outline-offset: 2px;
+}
+.top-button svg {
+  width: 16px;
+  height: 16px;
+}
 .privacy p {
   margin: 0;
   font-size: 12px;
